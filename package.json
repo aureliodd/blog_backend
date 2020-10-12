@@ -1,0 +1,31 @@
+{
+  "name": "blog-fullstack",
+  "version": "1.0.0",
+  "description": "conversione blog già esistente senza backend",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aureliodd/blog_nodejs_mongoose.git"
+  },
+  "keywords": [
+    "blog",
+    "mongoose",
+    "RESTful",
+    "API"
+  ],
+  "author": "Aurelio",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/aureliodd/blog_nodejs_mongoose/issues"
+  },
+  "homepage": "https://github.com/aureliodd/blog_nodejs_mongoose#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.4"
+  },
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
