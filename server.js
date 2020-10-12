@@ -20,6 +20,14 @@ mongoose.connect('mongodb://localhost/Postdb'); //se ogni volta non vogliamo cre
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
+app.use(function(req, res, next){
+  res.header("Access-Control-Allow-Origin","*");
+  res.header("Access-Control-Allow-Methods","POST, GET, OPTIONS, DELETE, PUT");
+  next();
+});
+
+
+
 
 var routes = require('./api/routes/blogRoutes'); //importing route
 routes(app); //register the route
