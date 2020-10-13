@@ -28,6 +28,7 @@ app.get('posts/:postId', function (req, res, next) { //ho abilitato il CORS
   res.json({msg: 'This is CORS-enabled for all origins!'})
 });
 
+
 /* app.use(function(req, res, next){
   res.header("Access-Control-Allow-Origin","*");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");

@@ -20,6 +20,7 @@ exports.list_all_posts = function(req, res) {
 }
 
 exports.create_a_post = function(req, res) {
+    
     if(req.body.creator == null || req.body.creator == "")
         req.body.creator = undefined;
 
