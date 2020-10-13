@@ -16,7 +16,7 @@ var express = require('express'),  //richiede il modulo express.js
 // mongoose instance connection url connection
 // Mi connetto al database. se non esiste, mongoose lo crea
 mongoose.Promise = global.Promise; //ci connettiamo all'istanza di mongodb
-mongoose.connect('mongodb://localhost/Postdb'); //se ogni volta non vogliamo creare un nuovo databse dobbiamo inserire "Tododb"
+mongoose.connect('mongodb://localhost/Postdb', { useNewUrlParser: true , useUnifiedTopology: true}); //useNew... useUnified... sono usati solo nelle versioni recenti. la versione senza è deprecata
 
 
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -33,8 +33,6 @@ app.get('posts/:postId', function (req, res, next) { //ho abilitato il CORS
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
 }); */
-
-
 
 
 var routes = require('./api/routes/blogRoutes'); //importing route
