@@ -19,8 +19,6 @@ exports.list_all_posts = function(req, res) {
   });
 }
 
-
-
 exports.create_a_post = function(req, res) {
     
     if(req.body.creator == null || req.body.creator == "")
@@ -46,7 +44,6 @@ exports.delete_a_post = function(req, res) {
 };
 
 exports.patch_a_post = function(req, res) { 
-
   Post.findOneAndUpdate({_id : req.params.postId}, 
     {$set: req.body}, 
     function(err,post){
