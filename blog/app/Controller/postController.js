@@ -6,6 +6,7 @@ class PostController{
         this.restController = new RestController();
         this.httpUrl = "http://localhost:3000/posts";
         this.modify = false;
+        this.id_to_modify;
 
         //UI
         this.postContainer;
@@ -42,7 +43,6 @@ class PostController{
                 var content = this.bodyPost.val();
                 let importnt = this.importnt.prop("checked"); //true se è importante
                 let priv = this.privatePost.prop("checked"); //false se è pubblico
-                console.log (importnt + " " + priv);
                 this.CreateModifyPost(user, title, content, importnt, priv);
             }.bind(this));
 
@@ -104,7 +104,8 @@ class PostController{
 
             this.modifyBtn.click(function(event){
                 this.modify = true;
-
+                let div_id_to_modify = event.target.closest("section");
+                this.id_to_modify  = $(div_id_to_modify).data("identifier");
                 this.openModal();
             }.bind(this));
 
@@ -126,6 +127,7 @@ class PostController{
         var string_tags = $("#tags").val();
         var tags = string_tags.split(",");
 
+
         if(this.modify == false){
 
             let post_to_send = {creator: user, title: title, content: content, public: !priv, priority: Number(importnt), tags: tags };
@@ -141,8 +143,8 @@ class PostController{
                 dataType: "json",
                 success: function(data,textStatus,jqXHR){
                     console.log("data",data);
-
-                    this.addPostToArray(new Post(data._id, data.creator, data.title, data.content, data.priority, data.public, tags));
+                    let post = new Post(data._id, data.creator, data.title, data.content, data.priority, data.public, tags);
+                    this.addPostToArray(post);
                     var newpost = this.addTextPost(post,1);
                 
                     if(data.priority) this.important(newpost);
@@ -153,37 +155,38 @@ class PostController{
                         this.comment(commentSection);
                     }.bind(this));
 
+                    console.log(newpost);
+
                     this.addPostToFeed(newpost);
             }.bind(this)};
 
             $.post(data);
         
         } else {
-            var div_id_to_modify = event.target.closest("section");
-                var id_to_modify = $(div_id_to_modify).data("identifier"); 
+
+                console.log(this.id_to_modify);
 
                 var post_to_modify = {
-                    title: this.titlePost,
-                    body: this.bodyPost,
-                    public: true, //da cambiare con il riferimento alla checkbox
-                    featured: true, // pure
-                    tag: tags,
+                    title: title,
+                    content: content,
+                    public: !priv, //da cambiare con il riferimento alla checkbox
+                    priority: Number(importnt), // pure
+                    tags: tags,
                  };
-        
-                 var json_post_to_modify = JSON.stringify(post_to_modify);
-        
+    
             
                 var data = {
-                    url: this.httpUrl+ "/" + id_to_modify,
-                    data: json_post_to_modify,
+                    url: this.httpUrl+ "/" + this.id_to_modify,
+                    data: post_to_modify,
                     dataType: "json",
                     success: function(data,textStatus,jqXHR){
                         console.log("data",data);
                 }};
+
+                console.log(data);
                 
                 this.restController.patch(data);
                 this.modify = false;
-
         }
 
         this.hideModal();

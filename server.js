@@ -1,5 +1,7 @@
 var express = require('express'),  //richiede il modulo express.js
 
+  cors = require('cors'), //modulo npm cors
+
   app = express(),
   
   port = process.env.PORT || 3000,
@@ -20,11 +22,17 @@ mongoose.connect('mongodb://localhost/Postdb'); //se ogni volta non vogliamo cre
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-app.use(function(req, res, next){
-  res.header("Access-Control-Allow-Origin","*");
-  res.header("Access-Control-Allow-Methods","POST, GET, OPTIONS, DELETE, PUT");
-  next();
+app.use(cors());
+
+app.get('posts/:postId', function (req, res, next) { //ho abilitato il CORS
+  res.json({msg: 'This is CORS-enabled for all origins!'})
 });
+
+/* app.use(function(req, res, next){
+  res.header("Access-Control-Allow-Origin","*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+}); */
 
 
 
@@ -34,7 +42,6 @@ routes(app); //register the route
 
 
 app.listen(port);
-
 
 console.log('blog avviato nella porta: ' + port);
 

@@ -22,24 +22,17 @@ class RestController{
             type: 'PATCH',
             url: url,
             data: JSON.stringify(patch),
-            processData: false,
+            //processData: false,
             //contentType: 'application/merge-patch+json',
-            success: onSuccess,
-         });
-    }
-
-    put(url,data, onSuccess){
-        $.ajax({
-            url: url,
-            type: 'PUT',
+            crossDomain: true,
             success: onSuccess,
          });
     }
 
     delete(url,onSuccess,onError){
         $.ajax({
-            url: url,
             type: 'DELETE',
+            url: url,
             crossDomain: true,
             success: onSuccess,
             });
